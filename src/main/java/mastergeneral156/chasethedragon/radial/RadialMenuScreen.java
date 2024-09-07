@@ -40,6 +40,7 @@ public class RadialMenuScreen extends Screen {
 
             if (isMouseOverOption(mouseX, mouseY, itemX, itemY)) {
                 actions[i].run(); // Execute the action when mouse is over this option
+                this.onClose();
             }
         }
 
@@ -65,6 +66,7 @@ public class RadialMenuScreen extends Screen {
 
                 if (isMouseOverOption((int) mouseX, (int) mouseY, itemX, itemY)) {
                     actions[i].run(); // Execute the action corresponding to the selected option
+                    this.onClose();
                     return true; // Stop further processing of this click event
                 }
             }

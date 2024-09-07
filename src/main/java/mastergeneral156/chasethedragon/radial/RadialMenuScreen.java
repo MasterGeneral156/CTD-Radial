@@ -7,14 +7,16 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
+import java.util.List;
+
 public class RadialMenuScreen extends Screen {
 
-    ResourceLocation yourTexture = new ResourceLocation(CTDRadial.MOD_ID, "textures/gui/empty_radial.png");
-    private final Runnable[] actions;
+    private final List<RadialMenuOption> options;
+    private static final int ICON_SIZE = 32;
 
-    public RadialMenuScreen(Runnable[] actions) {
+    public RadialMenuScreen(List<RadialMenuOption> options) {
         super(Component.literal("Radial Menu"));
-        this.actions = actions;
+        this.options = options;
     }
 
     @Override
@@ -30,26 +32,32 @@ public class RadialMenuScreen extends Screen {
         int centerY = this.height / 2;
         int radius = 50;
 
-        for (int i = 0; i < actions.length; i++) {
-            double angle = (i / (double) actions.length) * 2 * Math.PI;
+        boolean closeScreen = false;
+
+        for (int i = 0; i < options.size(); i++) {
+            RadialMenuOption option = options.get(i);
+            double angle = (i / (double) options.size()) * 2 * Math.PI;
             int itemX = centerX + (int)(Mth.cos((float)angle) * radius);
             int itemY = centerY + (int)(Mth.sin((float)angle) * radius);
 
-            RenderSystem.setShaderTexture(0, yourTexture);
-            guiGraphics.blit(yourTexture, itemX - 16, itemY - 16, 0, 0, 32, 32, 32, 32);
+            RenderSystem.setShaderTexture(0, option.getIcon());
+            guiGraphics.blit(option.getIcon(), itemX - ICON_SIZE / 2, itemY - ICON_SIZE / 2, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
 
             if (isMouseOverOption(mouseX, mouseY, itemX, itemY)) {
-                actions[i].run(); // Execute the action when mouse is over this option
-                this.onClose();
+                closeScreen = true;
+                option.getAction().run();
             }
+        }
+
+        if (closeScreen) {
+            this.onClose();
         }
 
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
     }
 
     private boolean isMouseOverOption(int mouseX, int mouseY, int itemX, int itemY) {
-        int size = 32; // Size of the option (width and height)
-        return mouseX >= itemX - size / 2 && mouseX <= itemX + size / 2 && mouseY >= itemY - size / 2 && mouseY <= itemY + size / 2;
+        return mouseX >= itemX - ICON_SIZE / 2 && mouseX <= itemX + ICON_SIZE / 2 && mouseY >= itemY - ICON_SIZE / 2 && mouseY <= itemY + ICON_SIZE / 2;
     }
 
     @Override
@@ -59,15 +67,16 @@ public class RadialMenuScreen extends Screen {
             int centerY = this.height / 2;
             int radius = 50;
 
-            for (int i = 0; i < actions.length; i++) {
-                double angle = (i / (double) actions.length) * 2 * Math.PI;
+            for (int i = 0; i < options.size(); i++) {
+                RadialMenuOption option = options.get(i);
+                double angle = (i / (double) options.size()) * 2 * Math.PI;
                 int itemX = centerX + (int)(Mth.cos((float)angle) * radius);
                 int itemY = centerY + (int)(Mth.sin((float)angle) * radius);
 
                 if (isMouseOverOption((int) mouseX, (int) mouseY, itemX, itemY)) {
-                    actions[i].run(); // Execute the action corresponding to the selected option
+                    option.getAction().run();
                     this.onClose();
-                    return true; // Stop further processing of this click event
+                    return true;
                 }
             }
         }

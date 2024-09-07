@@ -42,18 +42,21 @@ public class RadialMenuScreen extends Screen {
 
             RenderSystem.setShaderTexture(0, option.getIcon());
             guiGraphics.blit(option.getIcon(), itemX - ICON_SIZE / 2, itemY - ICON_SIZE / 2, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
-
-            if (isMouseOverOption(mouseX, mouseY, itemX, itemY)) {
-                closeScreen = true;
-                option.getAction().run();
-            }
         }
+
+        if (!RadialClientEvents.openRadial.isDown())
+            closeScreen = true;
 
         if (closeScreen) {
             this.onClose();
         }
 
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
+    }
+
+    @Override
+    public void onClose() {
+        super.onClose();
     }
 
     private boolean isMouseOverOption(int mouseX, int mouseY, int itemX, int itemY) {

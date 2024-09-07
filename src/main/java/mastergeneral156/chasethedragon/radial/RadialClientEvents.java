@@ -19,11 +19,11 @@ public class RadialClientEvents {
         event.register(openRadial);
     }
 
-    @SubscribeEvent
+    /*@SubscribeEvent
     public void onKeyInput(InputEvent.Key event) {
         if (openRadial.isDown()) {
             Minecraft.getInstance().setScreen(new RadialMenuScreen());
         }
 
-    }
+    }*/
 }

@@ -8,25 +8,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class RadialMenuScreen extends Screen {
+
     ResourceLocation yourTexture = new ResourceLocation(CTDRadial.MOD_ID, "textures/gui/empty_radial.png");
-    private final Runnable[] actions = new Runnable[8]; // Array to hold actions for each option
+    private final Runnable[] actions;
 
-    public RadialMenuScreen() {
+    public RadialMenuScreen(Runnable[] actions) {
         super(Component.literal("Radial Menu"));
-
-        // Initialize actions
-        actions[0] = () -> doAction("Action 1");
-        actions[1] = () -> doAction("Action 2");
-        actions[2] = () -> doAction("Action 3");
-        actions[3] = () -> doAction("Action 4");
-        actions[4] = () -> doAction("Action 5");
-        actions[5] = () -> doAction("Action 6");
-        actions[6] = () -> doAction("Action 7");
-        actions[7] = () -> doAction("Action 8");
-    }
-
-    private void doAction(String actionName) {
-        System.out.println("Performed: " + actionName);
+        this.actions = actions;
     }
 
     @Override
@@ -42,8 +30,8 @@ public class RadialMenuScreen extends Screen {
         int centerY = this.height / 2;
         int radius = 50;
 
-        for (int i = 0; i < 8; i++) {
-            double angle = (i / 8.0) * 2 * Math.PI;
+        for (int i = 0; i < actions.length; i++) {
+            double angle = (i / (double) actions.length) * 2 * Math.PI;
             int itemX = centerX + (int)(Mth.cos((float)angle) * radius);
             int itemY = centerY + (int)(Mth.sin((float)angle) * radius);
 
@@ -70,8 +58,8 @@ public class RadialMenuScreen extends Screen {
             int centerY = this.height / 2;
             int radius = 50;
 
-            for (int i = 0; i < 8; i++) {
-                double angle = (i / 8.0) * 2 * Math.PI;
+            for (int i = 0; i < actions.length; i++) {
+                double angle = (i / (double) actions.length) * 2 * Math.PI;
                 int itemX = centerX + (int)(Mth.cos((float)angle) * radius);
                 int itemY = centerY + (int)(Mth.sin((float)angle) * radius);
 

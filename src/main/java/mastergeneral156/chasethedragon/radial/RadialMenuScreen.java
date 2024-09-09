@@ -46,6 +46,7 @@ public class RadialMenuScreen extends Screen {
         int centerX = this.width / 2;
         int centerY = this.height / 2;
         int radius = 50;
+        Component hoveredText = Component.literal("gui.ctdradial.info");
 
         // Render all radial menu options
         for (int i = 0; i < options.size(); i++) {
@@ -56,8 +57,14 @@ public class RadialMenuScreen extends Screen {
 
             RenderSystem.setShaderTexture(0, option.getIcon());
             guiGraphics.blit(option.getIcon(), itemX - ICON_SIZE / 2, itemY - ICON_SIZE / 2, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
+
+            if (isMouseOverOption(mouseX, mouseY, itemX, itemY)) {
+                hoveredText = option.getText();
+            }
         }
 
+        if (hoveredText != null) 
+            guiGraphics.drawCenteredString(this.font, hoveredText, centerX, centerY - radius - 20, Color.WHITE.getRGB());
         // Check if the key is released and close the screen if so
         if (closeKey.isDown()) {
             this.onClose();

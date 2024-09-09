@@ -63,7 +63,7 @@ public class RadialMenuScreen extends Screen {
             }
         }
 
-        if (hoveredText != null) 
+        if (hoveredText != null)
             guiGraphics.drawCenteredString(this.font, hoveredText, centerX, centerY - radius - 20, Color.WHITE.getRGB());
         // Check if the key is released and close the screen if so
         if (closeKey.isDown()) {

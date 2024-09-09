@@ -46,7 +46,7 @@ public class RadialMenuScreen extends Screen {
         int centerX = this.width / 2;
         int centerY = this.height / 2;
         int radius = 50;
-        Component hoveredText = Component.literal("gui.ctdradial.info");
+        Component hoveredText = Component.translatable("gui.ctdradial.info");
 
         // Render all radial menu options
         for (int i = 0; i < options.size(); i++) {

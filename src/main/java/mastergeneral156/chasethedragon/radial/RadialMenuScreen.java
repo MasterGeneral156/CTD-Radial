@@ -57,7 +57,7 @@ public class RadialMenuScreen extends Screen {
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(guiGraphics);
+        this.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
 
         int centerX = this.width / 2;
         int centerY = this.height / 2;
@@ -135,11 +135,6 @@ public class RadialMenuScreen extends Screen {
     @Override
     public boolean mouseDragged(double p_94699_, double p_94700_, int p_94701_, double p_94702_, double p_94703_) {
         return super.mouseDragged(p_94699_, p_94700_, p_94701_, p_94702_, p_94703_);
-    }
-
-    @Override
-    public boolean mouseScrolled(double p_94686_, double p_94687_, double p_94688_) {
-        return super.mouseScrolled(p_94686_, p_94687_, p_94688_);
     }
 
     @Override

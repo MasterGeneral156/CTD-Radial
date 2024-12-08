@@ -24,17 +24,18 @@
  */
 package mastergeneral156.chasethedragon.radial;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-import java.awt.*;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 public class RadialMenuScreen extends Screen {
 
@@ -71,16 +72,29 @@ public class RadialMenuScreen extends Screen {
             int itemX = centerX + (int)(Mth.cos((float)angle) * radius);
             int itemY = centerY + (int)(Mth.sin((float)angle) * radius);
 
-            RenderSystem.setShaderTexture(0, option.getIcon());
-            guiGraphics.blit(option.getIcon(), itemX - ICON_SIZE / 2, itemY - ICON_SIZE / 2, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
+            // Generate RenderType for the texture
+            Function<ResourceLocation, RenderType> renderTypeFunction = RenderType::entityCutout; // Adjust RenderType as needed
+
+            // Use the updated blit method
+            guiGraphics.blit(
+                    renderTypeFunction,
+                    option.getIcon(),         // Texture ResourceLocation
+                    itemX - ICON_SIZE / 2,    // X position
+                    itemY - ICON_SIZE / 2,    // Y position
+                    0,                        // Z level (if applicable)
+                    0,                        // Texture X offset
+                    0,                        // Texture Y offset
+                    ICON_SIZE,                // Width of the texture to render
+                    ICON_SIZE,                // Height of the texture to render
+                    ICON_SIZE,                // Texture sheet width
+                    ICON_SIZE                 // Texture sheet height
+            );
 
             if (isMouseOverOption(mouseX, mouseY, itemX, itemY)) {
                 hoveredText = option.getText();
             }
         }
 
-        if (hoveredText != null)
-            guiGraphics.drawCenteredString(this.font, hoveredText, centerX, centerY - radius - 20, Color.WHITE.getRGB());
         // Check if the key is released and close the screen if so
         if (closeKey.isDown()) {
             this.onClose();

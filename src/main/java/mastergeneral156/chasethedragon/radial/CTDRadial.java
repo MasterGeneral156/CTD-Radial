@@ -30,9 +30,12 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(CTDRadial.MOD_ID)
 public class CTDRadial {
+    public static CTDRadial instance;
     public static final String MOD_ID = "ctdradial";
 
-    public CTDRadial() {
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+    public CTDRadial(FMLJavaModLoadingContext context)
+    {
+        instance = this;
+        IEventBus modEventBus = context.getModEventBus();
     }
 }

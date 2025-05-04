@@ -37,11 +37,25 @@ public class RadialMenuOption {
      * @param action Action to run when clicked. (Use packets for data sync)
      * @param icon ResourceLocation Radial menu item's icon
      * @param text Component Radial menu item's text. Will be displayed.
+     * @since < v0.1.7b
      */
     public RadialMenuOption(Runnable action, ResourceLocation icon, Component text) {
         this.action = action;
         this.icon = icon;
         this.text = text;
+    }
+
+    /**
+     * Used to create a radial menu option for the Radial Menu.
+     * @param action Action to run when clicked. (Use packets for data sync)
+     * @param icon ResourceLocation Radial menu item's icon
+     * @param text Component Radial menu item's text. Will be displayed.
+     * @since v0.1.8
+     */
+    public RadialMenuOption(Runnable action, ResourceLocation icon, String text) {
+        this.action = action;
+        this.icon = icon;
+        this.text = Component.literal(text);
     }
 
     /**

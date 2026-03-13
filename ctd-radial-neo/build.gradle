@@ -18,32 +18,19 @@ version = mod_version
 group = mod_group_id
 
 repositories {
-	maven {
-		name = "MasterGeneral156 - Public"
-		url = "https://694272r.chickenkiller.com/mcmodsrepo/"
-	}
-	maven {
-		name = "MasterGeneral156 - LAN"
-		url = "http://192.168.1.30/mcmodsrepo/"
-		allowInsecureProtocol = true
-	}
+    // Add here additional repositories if required by some of the dependencies below.
 }
 
 base {
     archivesName = "${mod_build}-${minecraft_version}"
 }
 
-// Mojang ships Java 21 to end users in 1.21.11, so mods should target Java 21.
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+// Java 25 in 26.1+
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
 
 neoForge {
     // Specify the version of NeoForge to use.
     version = project.neo_version
-
-    parchment {
-        mappingsVersion = project.parchment_mappings_version
-        minecraftVersion = project.parchment_minecraft_version
-    }
 
     // This line is optional. Access Transformers are automatically detected
     // accessTransformers = project.files('src/main/resources/META-INF/accesstransformer.cfg')
@@ -148,12 +135,13 @@ dependencies {
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
     var replaceProperties = [
             minecraft_version      : minecraft_version,
-            minecraft_version_range: minecraft_version_range,
             neo_version            : neo_version,
             mod_id                 : mod_id,
             mod_name               : mod_name,
             mod_license            : mod_license,
             mod_version            : mod_version,
+            mod_authors            : mod_authors,
+            mod_description        : mod_description
     ]
     inputs.properties replaceProperties
     expand replaceProperties
@@ -170,7 +158,7 @@ neoForge.ideSyncTask generateModMetadata
 publishing {
     publications {
         register('mavenJava', MavenPublication) {
-            artifact jar
+            from components.java
         }
     }
     repositories {

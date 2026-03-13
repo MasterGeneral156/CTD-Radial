@@ -12,6 +12,6 @@ import net.neoforged.fml.ModContainer;
 public class CTDRadial {
     public static final String MODID = "ctdradial";
     public static final Logger LOGGER = LogUtils.getLogger();
-    public CTDRadial(IEventBus modEventBus, ModContainer modContainer) {
+    public CTDRadial(IEventBus modEventBus) {
     }
 }

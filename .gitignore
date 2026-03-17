@@ -26,3 +26,8 @@ run-data
 repo
 /ctd-radial-neo/mcmodsrepo
 /ctd-radial-neo/mcmodsrepo
+*.sha512
+*.sha256
+*.sha1
+*.md5
+*.xml
